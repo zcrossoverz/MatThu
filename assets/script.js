@@ -12,7 +12,7 @@ const tt = [
     '☹️',
     '😞',
     '😔','😖',
-    '😓','😢','😢','😭','😟','😣','😩','😫','😕','🤔','🙄','😤',
+    '😓','😢','👋','😭','😟','😣','😩','😫','😕','🤔','🙄','😤',
     '😠',
     '😡',
     '😶',
@@ -33,7 +33,7 @@ const tt = [
     '🤛',
     '💪','✍️','🙏','🤳','👏','🤝',
     '🙌',
-    '👐'
+    '👐','🖖','👣'
 
 ]
 
@@ -55,8 +55,9 @@ let decode_char = (c)=>{
     return c;
 }
 
+
 encode.addEventListener('click',()=>{
-    let str = inp.value.split('');
+    let str = inp.value.toLowerCase().trim().split('');
     let out = '';
     for(let i=0;i<str.length;i++){
         out += encode_char(str[i])+' ';
@@ -71,6 +72,22 @@ decode.addEventListener('click',()=>{
         out += decode_char(str[i]);
     }
     outp.value = out;
+    fetch('https://api.zalo.ai/v1/tts/synthesize',{
+        headers:{
+            'apikey':'9Ej8MfAuZaJXVswXqxO7DOummrktpCul',
+            'Content-Type':'application/x-www-form-urlencoded'
+        },
+        mode:'cors',
+        method:'POST',
+        body: 'input='+encodeURI(out)
+
+    }).then(respone => respone.json()).then(data => { 
+        if(data.error_code==0){
+            let audio = new Audio(data.data.url);
+            audio.play();
+            console.log('success');
+        }else console.log(data.error_code);
+     });
 });
 copy.addEventListener('click',()=>{
     outp.select();
