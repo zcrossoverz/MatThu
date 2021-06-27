@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.nn {
+    margin: 10px;
+}
+.hidden {
+    visibility: hidden;
+    transition: 2s;
+}
+
+.active {
+    animation: pop 2s alternate;
+}
+
+@keyframes pop {
+    0%{
+        visibility: visible;
+    }
+    100%{
+        visibility: hidden;
+    }
+}
